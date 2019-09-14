@@ -40,7 +40,7 @@ export default {
       });  
     }, 1500);
   },
-  // data() {
+  // data() {    //asyncData can merge with data component if needed
   //   return {
   //     loadedPosts: []
   //   }

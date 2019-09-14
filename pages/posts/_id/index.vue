@@ -1,22 +1,40 @@
 <template>
-    <div class="single-post-page">
-        <section class="post">
-            <h1 class="post-title">Title of the post</h1>
-            <div class="post-details">
-                <div class="post-detail">Last updated on XXX</div>
-                <div class="post-detail">Written by NAME</div>
-            </div>
-            <p class="post-content">Content of the post</p>
-        </section>
-        <section class="post-feedback">
-            <p>Let me know what you think about the post, send a mail to <a href="mailto:feedback@my-awesome-domain.com">feedback@my-awesome-domain.com</a></p>
-        </section>
-    </div>
+  <div class="single-post-page">
+    <section class="post">
+      <h1 class="post-title">{{ loadedPost.title }}</h1>
+      <div class="post-details">
+        <div class="post-detail">Last updated on: {{ loadedPost.updatedDate }}</div>
+        <div class="post-detail">Written by: {{ loadedPost.author }}</div>
+      </div>
+      <div class="post-thumbnail">
+        <img :src="loadedPost.thumbnail" width="100%" height="auto" />
+      </div>
+      <p class="post-content">{{ loadedPost.content }}</p>
+    </section>
+    <section class="post-feedback">
+      <p>Let me know what you think about the post, send a mail to <a href="mailto:feedback@my-awesome-domain.com">feedback@my-awesome-domain.com</a></p>
+    </section>
+  </div>
 </template>
 
 <script>
 export default {
-  
+  asyncData(context, callback) {
+    setTimeout(() => {
+      callback(null, {
+        loadedPost:
+        { 
+          id: "1",
+          title: "First Post (ID: " + context.params.id + ")",
+          previewText: 'This is my awesome first post!',
+          author: 'Michael',              
+          updatedDate: new Date(),
+          content: 'Some dummy text, like Lorem Ipsum. Some dummy text, like Lorem Ipsum. More of it. Some dummy text, like Lorem Ipsum. Some dummy text, like Lorem Ipsum.',
+          thumbnail: 'https://images.unsplash.com/photo-1510746001195-0db09655b6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1789&q=80'
+        }          
+      })
+    }, 1500);
+  }
 }
 </script>
 
@@ -38,6 +56,14 @@ export default {
   }
 }
 
+.post-thumbnail {
+  width: 100%;
+  height: 30vh;
+  overflow: hidden;
+  border-bottom: 3px solid #ccc;
+  border-top: 3px solid #ccc;
+}
+
 .post-title {
   margin: 0;
 }
@@ -45,7 +71,6 @@ export default {
 .post-details {
   padding: 10px;
   box-sizing: border-box;
-  border-bottom: 3px solid #ccc;
   display: flex;
   justify-content: center;
   align-items: center;
