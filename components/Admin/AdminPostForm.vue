@@ -47,7 +47,8 @@ export default {
                 author: '',
                 title: '',
                 thumbnail   : '',
-                content: ''
+                content: '',
+                previewText: ''
             }
         }
     },
