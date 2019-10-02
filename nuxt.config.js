@@ -28,12 +28,14 @@ export default {
   ** Global CSS
   */
   css: [
-    //'~assets/styles/main.css' - for including global .css files
+    '~assets/styles/main.css' // - including global .css files
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~plugins/core-components.js',
+    '~plugins/date-filter.js'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -58,13 +60,13 @@ export default {
   env: {
     baseUrl: process.env.BASE_URL || 'https://nuxt-blog-f0b13.firebaseio.com'
   },
-  rootDir: '/', //default
+  //rootDir: '/', //default
   router: {
     //base: 'my-app' - in case of subfolder
     linkActiveClass: 'active'
   },
   transition: {
-    name: 'page',
+    name: 'fade',
     mode: 'out-in'
   }
 }

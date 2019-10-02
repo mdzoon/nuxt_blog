@@ -8,12 +8,8 @@
 </template>
 
 <script>
-import PostsList from '@/components/Posts/PostsList'
 
 export default {
-  components: {
-    PostsList
-  },
   asyncData(context, callback) {  //use Promise instead: return new Promise()
     setTimeout(() => {
       callback(null, {

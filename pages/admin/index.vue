@@ -11,14 +11,8 @@
 </template>
 
 <script>
-import PostsList from '@/components/Posts/PostsList'
-import AppButton from '@/components/UI/AppButton'
 
 export default {
-  components: {
-    PostsList,
-    AppButton
-  },
   computed: {
     loadedPosts() {
       return this.$store.getters.loadedPosts  
