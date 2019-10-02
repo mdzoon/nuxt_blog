@@ -18,24 +18,19 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  asyncData(context, callback) {
-    setTimeout(() => {
-      callback(null, {
-        loadedPost:
-        { 
-          id: "1",
-          title: "First Post (ID: " + context.params.id + ")",
-          previewText: 'This is my awesome first post!',
-          author: 'Michael',              
-          updatedDate: new Date(),
-          content: 'Some dummy text, like Lorem Ipsum. Some dummy text, like Lorem Ipsum. More of it. Some dummy text, like Lorem Ipsum. Some dummy text, like Lorem Ipsum.',
-          thumbnail: 'https://images.unsplash.com/photo-1510746001195-0db09655b6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1789&q=80'
-        }          
+  asyncData(context) {
+    return axios.get('https://nuxt-blog-f0b13.firebaseio.com/posts/' + context.params.id + '.json')
+      .then(res => {
+        return {
+          loadedPost: res.data
+        }
       })
-    }, 1500);
+      .catch(e => context.error(e))
   }
-}
+};
 </script>
 
 <style>
