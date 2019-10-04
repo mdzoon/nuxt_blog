@@ -13,6 +13,7 @@ import TheHeader from '@/components/Navigation/TheHeader'
 import TheSidenav from '@/components/Navigation/TheSidenav'
 
 export default {
+  middleware: 'log',  //use on single page, layout or all routes
   components: {
     TheHeader,
     TheSidenav

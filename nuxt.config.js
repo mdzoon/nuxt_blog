@@ -46,7 +46,13 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios',
   ],
+  axios: {
+    baseURL: process.env.BASE_URL || 'https://nuxt-blog-f0b13.firebaseio.com',
+    credentials: false
+  },
+
   /*
   ** Build configuration
   */
@@ -58,12 +64,14 @@ export default {
     }
   },
   env: {
-    baseUrl: process.env.BASE_URL || 'https://nuxt-blog-f0b13.firebaseio.com'
+    fbAPIKey: 'AIzaSyARTQEARKupm-TX8QgU1RD9Z3u-SGsaHYk'
+    //baseUrl: process.env.BASE_URL || 'https://nuxt-blog-f0b13.firebaseio.com'  //- not needed with axios settings
   },
   //rootDir: '/', //default
   router: {
     //base: 'my-app' - in case of subfolder
-    linkActiveClass: 'active'
+    linkActiveClass: 'active',
+    middleware: 'log'
   },
   transition: {
     name: 'fade',

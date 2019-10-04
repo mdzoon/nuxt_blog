@@ -18,17 +18,19 @@
 </template>
 
 <script>
-import axios from 'axios'
+//import axios from 'axios'
 
 export default {
   asyncData(context) {
-    return axios.get(process.env.baseUrl + '/posts/' + context.params.id + '.json')
-      .then(res => {
-        return {
-          loadedPost: res.data
-        }
-      })
-      .catch(e => context.error(e))
+    return context.app.$axios                                 //this.$axios only on client side 
+    .$get('/posts/' + context.params.id + '.json')
+    //return axios.get(process.env.baseUrl + '/posts/' + context.params.id + '.json')
+    .then(data => {
+      return {
+        loadedPost: data
+      }
+    })
+    .catch(e => context.error(e))
   },
   head: {
     title: 'A Blog Post'
