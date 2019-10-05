@@ -13,6 +13,7 @@ import AdminPostForm from '@/components/Admin/AdminPostForm'
 import axios from 'axios'
 
 export default {
+    middleware: ['check-auth', 'auth'],
     components: {
         AdminPostForm
     },

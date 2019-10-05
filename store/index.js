@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import Cookie from 'js-cookie'
 // import axios from 'axios' - no need for import if installed axios module
 
 const createStore = () => {
@@ -20,6 +21,9 @@ const createStore = () => {
             },
             setToken(state, token){
                 state.token = token
+            },
+            clearToken(state) {
+                state.token = null;                
             }
         },
         actions: {
@@ -67,10 +71,57 @@ const createStore = () => {
                 }
                 ).then(result => {
                   vuexContext.commit('setToken', result.idToken);
+                  localStorage.setItem('token', result.idToken);
+                  localStorage.setItem('tokenExpiration', new Date().getTime() + Number.pareseInt(result.expiresIn) * 1000    );
+                  Cookie.set('jwt', result.idToken);
+                  Cookie.set(
+                      "expirationDate",
+                      new Date().getTime() + Number.parseInt(result.expiresIn) * 1000
+                  );
                 })
                 .catch(error => {
                   console.log(error)
                 });   
+            },
+            initAuth(vuexContext, req) {
+                let token;
+                let expirationDate;
+
+                if (req) {
+                    if (!req.headers.cookie) {
+                        return;
+                    }
+                    const jwtCookie = req.headers.cookie
+                        .split(';')
+                        .find(c => c.trim().startsWith('jwt='));
+                    if (!jwtCookie) {
+                        return;
+                    }
+                    token = jwtCookie.split('=')[1];
+                    expirationDate = req.headers.cookie
+                    .split(';')
+                    .find(c => c.trim().startsWith('expirationDate='))
+                    .split('=')[1];
+                } else {
+                    token = localStorage.getItem('token');
+                    expirationDate = localStorage.getItem('tokenExpiration');
+                }
+                if (new Date().getTime() > +expirationDate || !token) {
+                    console.log('No token or invalid token');
+                    vuexContext.dispatch('logout');
+                    vuexContext.commit('setToken', token);
+                    return;
+                }
+                vuexContext.commit('setToken', token);
+            },
+            logout(vuexContext) {
+                vuexContext.commit('clearToken');
+                Cookie.remove('jwt');
+                Cookie.remove('expirationDate');
+                if (process.client) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('tokenExpiration');
+                }
             }
         },
         getters: {
