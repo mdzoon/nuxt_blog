@@ -66,7 +66,7 @@ export default {
     }
   },
   env: {
-    fbAPIKey: 'AIzaSyARTQEARKupm-TX8QgU1RD9Z3u-SGsaHYk'
+    fbAPIKey: '[API_KEY]'
     //baseUrl: process.env.BASE_URL || 'https://nuxt-blog-f0b13.firebaseio.com'  //- not needed with axios settings
   },
   //rootDir: '/', //default
